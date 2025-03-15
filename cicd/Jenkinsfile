@@ -17,12 +17,12 @@ pipeline {
                 url: "${GIT_PROJECT_URL}"
             }
         }
-        /*
         stage('CodeScan') {
             steps {
-                sh ' trivy fs .  -o result.html '       
-                }
+                sh "trivy fs --format table -o maven_dependency.html ."       
+            }
         }
+        /*
         stage('CodeLogin') {
             steps {
                 sh " aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_URL"
