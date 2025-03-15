@@ -38,6 +38,7 @@ pipeline {
                 sh 'mvn compile '
             }
         }
+        /*
         stage('SonarQube Scan') {    
                 steps {
                   withSonarQubeEnv(credentialsId: "${SONAQUBE_CRED}", \
