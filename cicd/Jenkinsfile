@@ -3,7 +3,7 @@ pipeline {
     tools {
         maven 'M2_HOME' //opt/maven
         jdk 'JAVA_HOME'
-        SCANNER_HOME 'sonar'
+        
     }
 
     environment {
@@ -15,6 +15,7 @@ pipeline {
         GIT_PROJECT_URL = 'https://github.com/henrykrop2022/pet-clinic-java.git'
         GIT_CRED = 'github-accessID'
         SONAQUBE_CRED = 'sonarqube-ID'
+        SCANNER_HOME= tool 'sonar'
         SONAR_URL = 'http://3.90.252.142:9000/'
         SONAQUBE_INSTALLATION = 'sonar'
         APP_NAME = 'pet-clinic-java'
