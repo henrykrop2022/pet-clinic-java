@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    environment {
+
+        AWS_REGION = 'us-east-1'
+        AWS_REPO = '180294207776.dkr.ecr.us-east-1.amazonaws.com/jenkins-ci'
+        AWS_URL = '180294207776.dkr.ecr.us-east-1.amazonaws.com'
+        BRANCH_NAME= 'main'
+        GIT_PROJECT_URL = 'https://github.com/henrykrop2022/pet-clinic-java.git'
+        GIT_CRED = 'github-accessID'
+    }
+    stages {
+        stage('Git Checkout'){ // Cloning the code from the repository
+            steps{
+                git branch: "${BRANCH_NAME}", credentialsId: "${GIT_CRED}", \
+                url: "${GIT_PROJECT_URL}"
+            }
+        }
+        /*
+        stage('CodeScan') {
+            steps {
+                sh ' trivy fs .  -o result.html '       
+                }
+        }
+        stage('CodeLogin') {
+            steps {
+                sh " aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_URL"
+            }
+        }
+        stage('DockerImageBuild') {
+            steps {
+                sh ' docker build -t jenkins-ci .'
+                sh ' docker build -t imageversion .'
+            }
+        }
+        stage('DockerImageTag') {
+            steps {
+                sh "docker tag jenkins-ci:latest $AWS_REPO:latest"
+                sh "docker tag imageversion $AWS_REPO:v1.$BUILD_NUMBER"
+            }
+        }
+        stage('Docker PushImage to ECR') {
+            steps {
+               sh "docker push $AWS_REPO:latest"
+                sh "docker push $AWS_REPO:v1.$BUILD_NUMBER" 
+            }
+        }
+        */
+    }
+}
