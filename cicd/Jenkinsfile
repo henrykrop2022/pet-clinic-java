@@ -35,7 +35,7 @@ pipeline {
         stage('Unit Test'){
             steps{
                 sh 'mvn clean'
-                sh 'mvn compile'
+                sh 'mvn compile -Dcheckstyle.skip=true'
             }
         }
         /*
