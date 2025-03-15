@@ -2,9 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'M2_HOME' //opt/maven
-        jdk 'JAVA_HOME'
-        sonarqube 'sonar'
-        
+        jdk 'JAVA_HOME'      
     }
 
     environment {
