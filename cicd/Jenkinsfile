@@ -53,6 +53,11 @@ pipeline {
               }
             }
         }
+         stage('Code Package'){
+            steps{
+                sh 'mvn package'
+            }
+        }
         /*
         stage('CodeLogin') {
             steps {
