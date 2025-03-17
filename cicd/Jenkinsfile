@@ -22,7 +22,7 @@ pipeline {
         ARTIFACTORY_USER = 'admin'
         ARTIFACTORY_PASSWORD = 'Devops1234'
         ARTIFACTPATH = 'target/*.jar'
-        ARTIFACTORY_URL = 'http://3.90.225.193:8082/artifactory'
+        ARTIFACTORY_URL = 'http://3.90.225.193:8082/artifactory/devops/'
         REPO = 'public.ecr.aws/g0j7o9l5'
         ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
     }
