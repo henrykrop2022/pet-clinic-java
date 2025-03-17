@@ -39,7 +39,7 @@ pipeline {
         stage('Unit Test'){
             steps{
                 sh 'mvn clean'
-                sh 'mvn compile -DskipTests'
+                sh 'mvn compile -DskipTests=true'
             }
         }
         stage('SonarQube Scan') {    
