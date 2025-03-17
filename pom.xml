@@ -207,7 +207,7 @@
             <version>${nohttp-checkstyle.version}</version>
           </dependency>
         </dependencies>
-        <!--executions>
+        <executions>
           <execution>
             <id>nohttp-checkstyle-validation</id>
             <goals>
@@ -222,7 +222,7 @@
               <propertyExpansion>config_loc=${basedir}/src/checkstyle/</propertyExpansion>
             </configuration>
           </execution>
-        </executions-->
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.graalvm.buildtools</groupId>
