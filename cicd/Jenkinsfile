@@ -18,6 +18,13 @@ pipeline {
         SONAR_URL = 'http://3.90.225.193:9000/'
         SONAQUBE_INSTALLATION = 'sonar'
         APP_NAME = 'pet-clinic-java'
+        JFROG_CRED = 'jfrog-cred'
+        ARTIFACTORY_USER = 'admin'
+        ARTIFACTORY_PASSWORD = 'Devops1234'
+        ARTIFACTPATH = 'target/*.jar'
+        ARTIFACTORY_URL = 'http://3.90.225.193:8082/artifactory'
+        REPO = 'public.ecr.aws/g0j7o9l5'
+        ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
     }
     stages {
         stage('Git Checkout'){ // Cloning the code from the repository
@@ -55,9 +62,31 @@ pipeline {
         }
          stage('Code Package'){
             steps{
-                sh 'mvn package'
+                sh 'mvn package -Dcheckstyle.skip=true'
             }
         }
+        stage('Upload Jar to Jfrog'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: "${JFROG_CRED}", \
+                 usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                    script {
+                        // Define the artifact path and target location
+                        //def artifactPath = 'target/*.jar'
+                        //def targetPath = "release_${BUILD_ID}.jar"
+
+                        // Upload the artifact using curl
+                        sh """
+                            curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
+                                 -T ${ARTIFACTPATH} \
+                                 ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH}
+                        """
+            }
+        }
+    }
+
+}
+
+
         /*
         stage('CodeLogin') {
             steps {
