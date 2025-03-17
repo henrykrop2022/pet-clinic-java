@@ -39,7 +39,7 @@ pipeline {
         stage('Unit Test'){
             steps{
                 sh 'mvn clean'
-                sh 'mvn compile -Dcheckstyle.skip=true'
+                sh 'mvn compile'
             }
         }
         stage('SonarQube Scan') {    
@@ -60,7 +60,7 @@ pipeline {
         }
          stage('Code Package'){
             steps{
-                sh 'mvn package -Dcheckstyle.skip'
+                sh 'mvn package -Dcheckstyle.skip=true'
             }
         }
         stage('Upload Jar to Jfrog'){
