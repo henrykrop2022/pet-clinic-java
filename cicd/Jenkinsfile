@@ -58,11 +58,11 @@ pipeline {
               }
             }
         }
-         stage('Code Package'){
-            steps{
-                sh 'mvn package -Dcheckstyle.skip=true'
-            }
-        }
+        //  stage('Code Package'){
+        //     steps{
+        //         sh 'mvn package -Dcheckstyle.skip=true'
+        //     }
+        // }
         stage('Upload Jar to Jfrog'){
             steps{
                 withCredentials([usernamePassword(credentialsId: "${JFROG_CRED}", \
