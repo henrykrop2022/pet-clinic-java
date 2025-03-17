@@ -19,11 +19,9 @@ pipeline {
         SONAQUBE_INSTALLATION = 'sonar'
         APP_NAME = 'pet-clinic-java'
         JFROG_CRED = 'jfrog-cred'
-        ARTIFACTORY_USER = 'admin'
-        ARTIFACTORY_PASSWORD = 'Devops1234'
         ARTIFACTPATH = 'target/*.jar'
-        ARTIFACTORY_URL = 'http://3.90.225.193:8082/artifactory/devops/'
-        REPO = 'public.ecr.aws/g0j7o9l5'
+        ARTIFACTORY_URL = 'http://3.90.225.193:8082/artifactory'
+        REPO = 'devops'
         ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
     }
     stages {
@@ -62,7 +60,7 @@ pipeline {
         }
          stage('Code Package'){
             steps{
-                sh 'mvn package -Dcheckstyle.skip=true'
+                sh 'mvn package -Dcheckstyle.skip'
             }
         }
         stage('Upload Jar to Jfrog'){
