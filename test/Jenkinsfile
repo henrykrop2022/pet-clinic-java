@@ -1,9 +1,9 @@
 pipeline {
-    agent {
-        label 'ubuntu'
-    }
+    agent any
+    
     stages {
         stage('checkserver') {
+            agent {label 'ubuntu'}
             steps {
                 sh 'echo "Checking server status"'  // Fixed missing closing quote
                 sh 'whoami'
@@ -11,11 +11,12 @@ pipeline {
             }
         }
 
-        stage('createfile') {
+        stage('mvn') {
+            agent {docker {image 'maven:3.6.3'}}
             steps {
                 script {
-                    sh 'echo "Creating a file"'
-                    sh 'touch $BUILD_ID.$(date)'  // Fixed unmatched parentheses
+                    sh 'mvn --version'
+                    // sh 'touch $BUILD_ID.$(date)'  // Fixed unmatched parentheses
                 }
             }
         }
