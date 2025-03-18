@@ -28,7 +28,7 @@ pipeline {
         HELMARTIFACTPATH = "petclinic-${BUILD_ID}.tgz"
         HELMARTIFACTTARGET = "heml/petclinic-${BUILD_ID}.tgz"
         KUBERNETES_CRED = 'KUBERNETES_CRED'
-        KUBERNETES_URL = 'https://104.237.133.213:6443'
+        KUBERNETES_URL = ' https://6AC36BF08904889F41376896D2BC8C4C.gr7.us-east-1.eks.amazonaws.com'
     }
     stages {
         // stage('Cleanup Workspace') {
@@ -153,8 +153,8 @@ pipeline {
         
             // sh 'helm rollback geo -n dev'
                 // sh 'sleep 60'
-                    sh 'kubectl delete secret -l owner=helm,name=geo -n dev'
-                    sh 'helm upgrade --install geo geoapp -n dev'
+                    sh 'kubectl delete secret -l owner=helm,name=petclinic -n dev'
+                    sh 'helm upgrade --install petclinic app-petclinic -n dev'
                     }
                 }
             }
