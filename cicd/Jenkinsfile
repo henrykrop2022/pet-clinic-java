@@ -154,7 +154,7 @@ pipeline {
             // sh 'helm rollback geo -n dev'
                 // sh 'sleep 60'
                     // sh 'kubectl delete secret -l owner=helm,name=petclinic -n dev'
-                    sh 'helm upgrade --install petclinic app-petclinic -n dev'
+                    sh 'helm upgrade --install petclinic app-pet -n dev'
                     }
                 }
             }
