@@ -108,16 +108,10 @@ pipeline {
             }
         }
         stage('Chart Version Update'){
-        steps{
-         sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
-           
-        }
-    }
-    stage('Chart Version Update'){
-        steps{
-         sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
+            steps{
+                sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
            
            }
-        }   
+        } 
     }
 }
