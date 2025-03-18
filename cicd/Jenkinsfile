@@ -15,12 +15,12 @@ pipeline {
         GIT_CRED = 'github-accessID'
         SONAQUBE_CRED = 'sonarqube-credentials'
         SCANNER_HOME= tool 'sonar'
-        SONAR_URL = 'http://3.90.225.193:9000/'
+        SONAR_URL = 'http://54.198.102.162/:9000/'
         SONAQUBE_INSTALLATION = 'sonar'
         APP_NAME = 'pet-clinic-java'
         JFROG_CRED = 'jfrog-cred'
         ARTIFACTPATH = 'target/*.jar'
-        ARTIFACTORY_URL = 'http://3.90.225.193:8082/artifactory'
+        ARTIFACTORY_URL = 'http://54.198.102.162:8082/artifactory'
         REPO = 'devops'
         ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
     }
