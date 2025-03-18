@@ -5,13 +5,12 @@ pipeline {
     stages{
         stage ('checkserver'){
             steps{
-                 steps{
                 sh 'echo "Checking server status'
                 sh 'whoami'
                 sh 'cat /etc/*release'
                  }
             }
-        }
+        
         stage('createfile'){
             steps{
                 script{
@@ -22,4 +21,4 @@ pipeline {
                 }
             }
         }
-    }
+}
