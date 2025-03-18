@@ -15,12 +15,12 @@ pipeline {
         GIT_CRED = 'github-accessID'
         SONAQUBE_CRED = 'sonarqube-credentials'
         SCANNER_HOME= tool 'sonar'
-        SONAR_URL = 'http://98.80.8.63:9000/'
+        SONAR_URL = 'http://54.221.12.180:9000/'
         SONAQUBE_INSTALLATION = 'sonar'
         APP_NAME = 'pet-clinic-java'
         JFROG_CRED = 'jfrog-cred'
         ARTIFACTPATH = 'target/*.jar'
-        ARTIFACTORY_URL = 'http://98.80.8.63:8082/artifactory'
+        ARTIFACTORY_URL = 'http://54.221.12.180:8082/artifactory'
         REPO = 'devops'
         ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
         DOCKER_REPO = "${REPO_URL}/${DOCKER_REPO_NAME}"
@@ -42,7 +42,6 @@ pipeline {
                 url: "${GIT_PROJECT_URL}"
             }
         }
-        /*
         stage('CodeScan') {
             steps {
                 sh "trivy fs --format table -o maven_dependency.html ."       
@@ -147,16 +146,16 @@ pipeline {
              }
           } 
        }
-        stage('Deploy helm to k8s'){
-             steps{
-                 kubeconfig(credentialsId: "${KUBERNETES_CRED}" ,caCertificate: '', serverUrl: "${KUBERNETES_URL}") {
+        // stage('Deploy helm to k8s'){
+        //      steps{
+        //          kubeconfig(credentialsId: "${KUBERNETES_CRED}" ,caCertificate: '', serverUrl: "${KUBERNETES_URL}") {
         
-            // sh 'helm rollback geo -n dev'
-                // sh 'sleep 60'
-                    // sh 'kubectl delete secret -l owner=helm,name=petclinic -n dev'
-                    sh 'helm upgrade --install petclinic app-pet -n dev'
-                    }
-                }
-            }
+        //     // sh 'helm rollback geo -n dev'
+        //         // sh 'sleep 60'
+        //             // sh 'kubectl delete secret -l owner=helm,name=petclinic -n dev'
+        //             sh 'helm upgrade --install petclinic app-pet -n dev'
+        //             }
+        //         }
+        //     }
         }
     }
