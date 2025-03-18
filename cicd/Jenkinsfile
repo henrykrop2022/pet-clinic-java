@@ -25,6 +25,10 @@ pipeline {
         ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
         DOCKER_REPO = "${REPO_URL}/${DOCKER_REPO_NAME}"
         DOCKER_REPO_NAME = "${APP_NAME}"
+        HELMARTIFACTPATH = "petclinic-${BUILD_ID}.tgz"
+        HELMARTIFACTTARGET = "heml/petclinic-${BUILD_ID}.tgz"
+        KUBERNETES_CRED = 'KUBERNETES_CRED'
+        KUBERNETES_URL = 'https://104.237.133.213:6443'
     }
     stages {
         // stage('Cleanup Workspace') {
@@ -121,8 +125,27 @@ pipeline {
         } 
         stage('Package Helm'){
             steps{
-                sh 'helm package pet-clinic-java'
+                sh 'helm package petclinic'
          }
       }
+       stage('Upload helm package to Jfrog'){
+            steps{
+                 withCredentials([usernamePassword(credentialsId: "${JFROG_CRED}", \
+                 usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                    script {
+                        // Define the artifact path and target location
+                        //def artifactPath = 'geo-app-${BUILD_ID}.tgz'
+                        //def targetPath = "heml/geo-app-${BUILD_ID}.tgz"
+
+                        // Upload the artifact using curl
+                        sh """
+                            curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
+                                 -T ${HELMARTIFACTPATH} \
+                                 ${ARTIFACTORY_URL}/${REPO}/${HELMARTIFACTTARGET}
+                        """
+               }
+             }
+          } 
+       }
     }
 }
