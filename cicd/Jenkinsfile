@@ -27,17 +27,18 @@ pipeline {
         DOCKER_REPO_NAME = "${APP_NAME}"
     }
     stages {
-        stage('Cleanup Workspace') {
-            steps {
-                deleteDir() // Clears old workspace files
-            }
-        }
+        // stage('Cleanup Workspace') {
+        //     steps {
+        //         deleteDir() // Clears old workspace files
+        //     }
+        // }
         stage('Git Checkout'){ // Cloning the code from the repository
             steps{
                 git branch: "${BRANCH_NAME}", credentialsId: "${GIT_CRED}", \
                 url: "${GIT_PROJECT_URL}"
             }
         }
+        /*
         stage('CodeScan') {
             steps {
                 sh "trivy fs --format table -o maven_dependency.html ."       
@@ -111,7 +112,7 @@ pipeline {
                sh "docker push $AWS_REPO:latest"
                 sh "docker push $AWS_REPO:v1.$BUILD_NUMBER" 
             }
-        }
+        */
         stage('Chart Version Update'){
             steps{
                 // sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
