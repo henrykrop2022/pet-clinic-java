@@ -5,7 +5,7 @@ pipeline {
     stages{
         stage ('checkserver'){
             steps{
-                 script{
+                 steps{
                 sh 'echo "Checking server status'
                 sh 'whoami'
                 sh 'cat /etc/*release'
