@@ -2,23 +2,22 @@ pipeline {
     agent {
         label 'ubuntu'
     }
-    stages{
-        stage ('checkserver'){
-            steps{
-                sh 'echo "Checking server status'
+    stages {
+        stage('checkserver') {
+            steps {
+                sh 'echo "Checking server status"'  // Fixed missing closing quote
                 sh 'whoami'
                 sh 'cat /etc/*release'
-                 }
             }
-        
-        stage('createfile'){
-            steps{
-                script{
-                sh 'echo "Creating a file"'
-                sh 'touch $BUILD_ID.$(date))'
-                   }
+        }
 
+        stage('createfile') {
+            steps {
+                script {
+                    sh 'echo "Creating a file"'
+                    sh 'touch $BUILD_ID.$(date)'  // Fixed unmatched parentheses
                 }
             }
         }
+    }
 }
