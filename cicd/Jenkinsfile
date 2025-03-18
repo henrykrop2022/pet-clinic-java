@@ -147,5 +147,16 @@ pipeline {
              }
           } 
        }
+        stage('Deploy helm to k8s'){
+             steps{
+                 kubeconfig(credentialsId: "${KUBERNETES_CRED}" ,caCertificate: '', serverUrl: "${KUBERNETES_URL}") {
+        
+            // sh 'helm rollback geo -n dev'
+                // sh 'sleep 60'
+                    sh 'kubectl delete secret -l owner=helm,name=geo -n dev'
+                    sh 'helm upgrade --install geo geoapp -n dev'
+                    }
+                }
+            }
+        }
     }
-}
