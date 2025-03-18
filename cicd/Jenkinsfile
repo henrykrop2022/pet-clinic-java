@@ -114,7 +114,8 @@ pipeline {
         }
         stage('Chart Version Update'){
             steps{
-                sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
+                // sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
+                sh "python3 ${WORKSPACE}/setup_scripts/chartUpdate.py ${BUILD_ID}"
            
            }
         } 
