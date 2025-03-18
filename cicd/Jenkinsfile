@@ -115,7 +115,7 @@ pipeline {
                sh "docker push $AWS_REPO:latest"
                 sh "docker push $AWS_REPO:v1.$BUILD_NUMBER" 
             }
-        */
+        }
         stage('Chart Version Update'){
             steps{
                 sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
@@ -156,6 +156,6 @@ pipeline {
         //             sh 'helm upgrade --install petclinic app-pet -n dev'
         //             }
         //         }
-        /  }
+        /  
         }
     }
