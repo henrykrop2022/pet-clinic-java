@@ -27,6 +27,11 @@ pipeline {
         DOCKER_REPO_NAME = "${APP_NAME}"
     }
     stages {
+        stage('Cleanup Workspace') {
+            steps {
+                deleteDir() // Clears old workspace files
+            }
+        }
         stage('Git Checkout'){ // Cloning the code from the repository
             steps{
                 git branch: "${BRANCH_NAME}", credentialsId: "${GIT_CRED}", \
