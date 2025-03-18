@@ -15,12 +15,12 @@ pipeline {
         GIT_CRED = 'github-accessID'
         SONAQUBE_CRED = 'sonarqube-credentials'
         SCANNER_HOME= tool 'sonar'
-        SONAR_URL = 'http://54.198.102.162/:9000/'
+        SONAR_URL = 'http://98.80.8.63:9000/'
         SONAQUBE_INSTALLATION = 'sonar'
         APP_NAME = 'pet-clinic-java'
         JFROG_CRED = 'jfrog-cred'
         ARTIFACTPATH = 'target/*.jar'
-        ARTIFACTORY_URL = 'http://54.198.102.162:8082/artifactory'
+        ARTIFACTORY_URL = 'http://98.80.8.63:8082/artifactory'
         REPO = 'devops'
         ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
         DOCKER_REPO = "${REPO_URL}/${DOCKER_REPO_NAME}"
@@ -84,8 +84,6 @@ pipeline {
                 }
             }
         }
-         
-
         stage('CodeLogin') {
             steps {
                 sh " aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_URL"
@@ -109,6 +107,17 @@ pipeline {
                 sh "docker push $AWS_REPO:v1.$BUILD_NUMBER" 
             }
         }
-        
+        stage('Chart Version Update'){
+        steps{
+         sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
+           
+        }
+    }
+    stage('Chart Version Update'){
+        steps{
+         sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
+           
+           }
+        }   
     }
 }
