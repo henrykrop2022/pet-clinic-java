@@ -73,11 +73,11 @@ pipeline {
                         //def targetPath = "release_${BUILD_ID}.jar"
 
                         // Upload the artifact using curl
-                        // sh """ curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
-                        //           -T ${ARTIFACTPATH} \
-                        //          ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH} """
-                        sh ''' curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD -T target/*.jar http://54.198.102.162:8082/artifactory/devops/release_38.jar
-'''
+                        sh """ curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
+                                  -T ${ARTIFACTPATH} \
+                                 ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH} """
+                        // sh ''' curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD -T target/*.jar http://54.198.102.162:8082/artifactory/devops/release_38.jar
+// '''
 
             }
         }
