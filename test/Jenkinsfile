@@ -1,0 +1,25 @@
+pipeline {
+    agent {
+        label 'ubuntu'
+    }
+    stages{
+        stage ('checkserver'){
+            steps{
+                 script{
+                sh 'echo "Checking server status'
+                sh 'whoami'
+                sh 'cat /etc/*release'
+                 }
+            }
+        }
+        stage('createfile'){
+            steps{
+                script{
+                sh 'echo "Creating a file"'
+                sh 'touch $BUILD_ID.$(date))'
+                   }
+
+                }
+            }
+        }
+    }
