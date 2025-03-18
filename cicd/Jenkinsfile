@@ -156,6 +156,6 @@ pipeline {
         //             sh 'helm upgrade --install petclinic app-pet -n dev'
         //             }
         //         }
-        //     }
+        /  }
         }
     }
