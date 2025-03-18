@@ -22,7 +22,7 @@ pipeline {
         ARTIFACTPATH = 'target/*.jar'
         ARTIFACTORY_URL = 'http://54.198.102.162:8082/artifactory'
         REPO = 'devops'
-        ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
+        ARTIFACTTARGETPATH = 'release_${BUILD_ID}.jar'
     }
     stages {
         stage('Git Checkout'){ // Cloning the code from the repository
