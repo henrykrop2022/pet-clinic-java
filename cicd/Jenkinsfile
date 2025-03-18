@@ -82,11 +82,9 @@ pipeline {
             }
         }
     }
+  }
 
-}
 
-
-        /*
         stage('CodeLogin') {
             steps {
                 sh " aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_URL"
@@ -110,6 +108,6 @@ pipeline {
                 sh "docker push $AWS_REPO:v1.$BUILD_NUMBER" 
             }
         }
-        */
+        
     }
 }
