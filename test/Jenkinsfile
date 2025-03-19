@@ -49,8 +49,7 @@ pipeline {
         }
     }
     */
-    pipeline {
-    agent none
+   
     stages {
         stage('checkserver') {
             agent { label 'ubuntu' }
