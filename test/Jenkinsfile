@@ -19,7 +19,7 @@ pipeline {
         }
     }
 }
-*/
+
 
     stages {
         stage('checkserver') {
@@ -48,4 +48,28 @@ pipeline {
             }
         }
     }
+    */
+    pipeline {
+    agent none
+    stages {
+        stage('checkserver') {
+            agent { label 'ubuntu' }
+            steps {
+                sh 'whoami'
+                sh 'cat /etc/os-release'
+            }
+        }
+        stage('maven') {
+            agent {
+                docker {
+                    image 'maven:3.9.9-amazoncorretto-8-debian'
+                    label 'ubuntu'
+                }
+            }
+            steps {
+                sh 'mvn --version'
+            }
+        }
+    }
+}
 }
