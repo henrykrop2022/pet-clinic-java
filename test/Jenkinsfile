@@ -12,12 +12,11 @@ pipeline {
         }
 
         stage('mvn') {
-            agent {docker {image 'maven:3.6.3'}}
+            agent {docker {image 'maven:3.9.9-amazoncorretto-8-debian'}}
             steps {
-                script {
                     sh 'mvn --version'
                     // sh 'touch $BUILD_ID.$(date)'  // Fixed unmatched parentheses
-                }
+                
             }
         }
     }
