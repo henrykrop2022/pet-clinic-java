@@ -3,7 +3,7 @@ pipeline {
     
     stages {
         stage('checkserver') {
-            agent { label 'ubuntu' }  // Fixed agent placement
+            agent { label 'ubuntu' }  // Corrected syntax: changed "labels" to "label"
             steps {
                 sh 'echo "Checking server status"'
                 sh 'whoami'
@@ -12,8 +12,7 @@ pipeline {
         }
 
         stage('mvn') {
-            agent { labels 'ubuntu'
-             docker { image 'maven:3.9.9-amazoncorretto-8-debian' } }  // Corrected docker usage
+            agent { docker { image 'maven:3.9.9-amazoncorretto-8-debian' } }  // You cannot use label and docker together
             steps {
                 sh 'mvn --version'
             }
