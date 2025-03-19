@@ -1,22 +1,22 @@
 pipeline {
-    agent any  // Define pipeline agent at the top level
+    agent any
     
     stages {
         stage('checkserver') {
+            agent {label 'ubuntu'}
             steps {
-                sh 'echo "Checking server status"'
+                sh 'echo "Checking server status"'  // Fixed missing closing quote
                 sh 'whoami'
                 sh 'cat /etc/*release'
             }
         }
 
-        stage('mvn') {
+        stage('mvn'){
+            agent {
+                label 'ubuntu'
+                docker {image 'maven:3.9.9-amazoncorretto-8-debian'}}
             steps {
-                script {
-                    docker.image('maven:3.9.9-amazoncorretto-8-debian').inside {
-                        sh 'mvn --version'
-                    }
-                }
+                    sh 'mvn --version'  
             }
         }
     }
