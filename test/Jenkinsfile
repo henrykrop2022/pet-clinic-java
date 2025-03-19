@@ -1,22 +1,23 @@
 pipeline {
-    agent any
-    
+    agent none
     stages {
         stage('checkserver') {
-            agent {label 'ubuntu'}
+            agent { label 'ubuntu' }
             steps {
-                sh 'echo "Checking server status"'  // Fixed missing closing quote
-                sh 'whoami'
-                sh 'cat /etc/*release'
+                script {
+                    sh 'pwd'
+                    sh 'whoami'
+                    sh 'cat /etc/os-release'
+                }
             }
         }
-
-        stage('mvn'){
-            agent {
-                label 'ubuntu'
-                docker {image 'maven:3.9.9-amazoncorretto-8-debian'}}
+        stage('maven') {
+            agent {label 'ubuntu'}
+                {docker { image 'maven:3.9.9-amazoncorretto-8-debian' }
+            }
             steps {
-                    sh 'mvn --version'  
+                sh "touch \$BUILD_ID-\$(date)"
+                sh 'mvn --version'
             }
         }
     }
