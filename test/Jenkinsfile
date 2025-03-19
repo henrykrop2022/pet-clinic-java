@@ -1,6 +1,6 @@
 pipeline {
     agent any  // Default agent applies to all stages unless overridden
-    
+/* 
     stages {
         stage('checkserver') {
             agent { label 'ubuntu' }  // Corrected syntax: changed "labels" to "label"
@@ -15,6 +15,36 @@ pipeline {
             agent { docker { image 'maven:3.9.9-amazoncorretto-8-debian' } }  // You cannot use label and docker together
             steps {
                 sh 'mvn --version'
+            }
+        }
+    }
+}
+*/
+
+    stages {
+        stage('checkserver') {
+            agent { label 'ubuntu' }  // This specifies the agent for the checkserver stage
+            steps {
+                script {
+                    sh 'pwd'
+                    sh 'whoami'
+                    sh 'cat /etc/os-release'
+                }
+            }
+        }
+        stage('maven') {
+            agent { 
+                label 'ubuntu'  // This specifies the Ubuntu agent for this stage
+            }
+            steps {
+                script {
+                    // Run Docker container in the Ubuntu agent
+                    docker.image('maven:3.9.9-amazoncorretto-8-debian').inside {
+                        // Properly escape the $ in $(date)
+                        sh "touch ${BUILD_ID}-\$(date)"
+                        sh 'mvn --version'
+                    }
+                }
             }
         }
     }
