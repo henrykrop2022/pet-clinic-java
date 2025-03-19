@@ -13,7 +13,7 @@ pipeline {
 
         stage('mvn'){
             agent {
-                label 'ubuntu'
+                // label 'ubuntu'
                 docker {image 'maven:3.9.9-amazoncorretto-8-debian'}}
             steps {
                     sh 'mvn --version'  
