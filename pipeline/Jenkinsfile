@@ -14,7 +14,7 @@ pipeline {
         BRANCH_NAME= 'main'
         GIT_PROJECT_URL = 'https://github.com/henrykrop2022/pet-clinic-java.git'
         GIT_CRED = 'github-accessID'
-        SONAQUBE_CRED = 'sonarqube-credentials'
+        SONAQUBE_CRED = 'sonar-scannerID'
         SCANNER_HOME= tool 'sonar'
         SONAR_URL = 'http://54.160.67.214:9000'
         SONAQUBE_INSTALLATION = 'sonar'
@@ -46,6 +46,15 @@ pipeline {
             steps{
                 sh 'mvn clean package -DskipTests=true'
                 sh 'mvn compile -DskipTests=true'
+            }
+        }
+        stage('SonarQube Scan') {    
+                steps {
+                  withSonarQubeEnv(credentialsId: "${SONAQUBE_CRED}", \
+                installationName: "${SONAQUBE_INSTALLATION}" ) {
+              sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=${APP_NAME} -Dsonar.projectKey=${APP_NAME} \
+                   -Dsonar.java.binaries=. '''
+                }
             }
         }
     }
