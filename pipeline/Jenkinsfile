@@ -117,5 +117,29 @@ pipeline {
            
            }
         }
+         stage('Package Helm'){
+            steps{
+                sh 'helm package petclinic'
+         }
+      }
+        stage('Upload helm package to Jfrog'){
+            steps{
+                 withCredentials([usernamePassword(credentialsId: "${JFROG_CRED}", \
+                 usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                    script {
+                        // Define the artifact path and target location
+                        //def artifactPath = 'geo-app-${BUILD_ID}.tgz'
+                        //def targetPath = "heml/geo-app-${BUILD_ID}.tgz"
+
+                        // Upload the artifact using curl
+                        sh """
+                            curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
+                                 -T ${HELMARTIFACTPATH} \
+                                 ${ARTIFACTORY_URL}/${REPO}/${HELMARTIFACTTARGET}
+                        """
+               }
+             }
+          } 
+       }
     }
  } 
