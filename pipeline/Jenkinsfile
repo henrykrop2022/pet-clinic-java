@@ -37,5 +37,10 @@ pipeline {
                 git branch: "${BRANCH_NAME}", url: "${GIT_PROJECT_URL}"
            }
         } 
+         stage('CodeScan') {
+            steps {
+                sh "trivy fs --format table -o maven_dependency.html ."       
+            }
+        }
     }
  } 
