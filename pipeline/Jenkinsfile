@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    //    {label 'ubuntu'}
+    tools {
+        maven 'M2_HOME' //opt/maven
+        jdk 'JAVA_HOME'      
+    }
+
+    environment {
+
+        AWS_REGION = 'us-east-1'
+        AWS_REPO = '180294207776.dkr.ecr.us-east-1.amazonaws.com/jenkins-ci'
+        AWS_URL = '180294207776.dkr.ecr.us-east-1.amazonaws.com'
+        BRANCH_NAME= 'main'
+        GIT_PROJECT_URL = 'https://github.com/henrykrop2022/pet-clinic-java.git'
+        GIT_CRED = 'github-accessID'
+        SONAQUBE_CRED = 'sonarqube-credentials'
+        SCANNER_HOME= tool 'sonar'
+        SONAR_URL = 'http://54.160.67.214:9000'
+        SONAQUBE_INSTALLATION = 'sonar'
+        APP_NAME = 'pet-clinic-java'
+        JFROG_CRED = 'jfrog-cred'
+        ARTIFACTPATH = 'target/*.jar'
+        ARTIFACTORY_URL = 'http://54.160.67.214:8082/artifactory'
+        REPO = 'devops'
+        ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
+        DOCKER_REPO = "${REPO_URL}/${DOCKER_REPO_NAME}"
+        DOCKER_REPO_NAME = "${APP_NAME}"
+        HELMARTIFACTPATH = "petclinic-${BUILD_ID}.tgz"
+        HELMARTIFACTTARGET = "heml/petclinic-${BUILD_ID}.tgz"
+        KUBERNETES_CRED = 'KUBERNETES_CRED'
+        KUBERNETES_URL = ' https://6AC36BF08904889F41376896D2BC8C4C.gr7.us-east-1.eks.amazonaws.com'
+    }
+    stages {
+        stage('Git Checkout'){ // Cloning the code from the repository
+            steps{
+                git branch: "${BRANCH_NAME}", url: "${GIT_PROJECT_URL}"
+           }
+        } 
+    }
+ } 
