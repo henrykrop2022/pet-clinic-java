@@ -173,9 +173,10 @@ pipeline {
 }
         stage('Verify the Deployment') {
             steps {
-               withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://172.31.8.146:6443') {
-                        sh "kubectl get pods -n webapps"
-                        sh "kubectl get svc -n webapps"
+                 withCredentials([string(credentialsId: "${KUBERNETES_CRED}", variable: 'KUBECONFIG_CONTENT')]) {
+            
+                        sh "kubectl get nodes"
+                        // sh "kubectl get svc -n webapps"
                 
             }
         }  
