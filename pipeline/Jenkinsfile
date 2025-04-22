@@ -28,8 +28,8 @@ pipeline {
         DOCKER_REPO_NAME = "${APP_NAME}"
         HELMARTIFACTPATH = "petclinic-${BUILD_ID}.tgz"
         HELMARTIFACTTARGET = "heml/petclinic-${BUILD_ID}.tgz"
-        KUBERNETES_CRED = 'KUBERNETES_CRED'
-        KUBERNETES_URL = ' https://6AC36BF08904889F41376896D2BC8C4C.gr7.us-east-1.eks.amazonaws.com'
+        KUBERNETES_CRED = 'k8-credID'
+        KUBERNETES_URL = ' https://oidc.eks.us-east-1.amazonaws.com/id/4964B40B1808D40AB69DB546E7E49725'
     }
     stages {
         stage('Git Checkout'){ // Cloning the code from the repository
@@ -141,5 +141,16 @@ pipeline {
              }
           } 
        }
+       stage('Deploy helm to k8s'){
+            steps{
+                kubeconfig(credentialsId: "${KUBERNETES_CRED}" ,caCertificate: '', serverUrl: "${KUBERNETES_URL}") {
+    
+                // sh 'helm rollback geo -n dev'
+                 // sh 'sleep 60'
+                sh 'kubectl delete secret -l owner=helm,name=geo -n dev'
+                sh 'helm upgrade --install geo geoapp -n dev'
+               }
+           }
+        }
     }
  } 
