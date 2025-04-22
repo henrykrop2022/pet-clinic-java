@@ -173,7 +173,7 @@ pipeline {
 }
         stage('Verify the Deployment') {
             steps {
-                 withCredentials([string(credentialsId: "${KUBERNETES_CRED}", variable: 'KUBECONFIG_CONTENT')]) {
+                 withCredentials([file(credentialsId: "${KUBERNETES_CRED}", variable: 'KUBECONFIG_CONTENT')]) {
             
                         sh "export KUBECONFIG=$KUBECONFIG_FILE && kubectl get nodes"
                         // sh "kubectl get svc -n webapps"
