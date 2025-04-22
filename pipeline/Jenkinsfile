@@ -21,7 +21,7 @@ pipeline {
         APP_NAME = 'pet-clinic-java'
         JFROG_CRED = 'jfrog-cred'
         ARTIFACTPATH = 'target/*.jar'
-        ARTIFACTORY_URL = 'http://100.27.185.113:8082/artifactory'
+        ARTIFACTORY_URL = 'http://100.27.185.113:8082/artifactory/maven-remote/devops'
         REPO = 'devops'
         ARTIFACTTARGETPATH = "release_${BUILD_ID}.jar"
         DOCKER_REPO = "${REPO_URL}/${DOCKER_REPO_NAME}"
