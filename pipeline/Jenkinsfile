@@ -37,80 +37,80 @@ pipeline {
                 git branch: "${BRANCH_NAME}", url: "${GIT_PROJECT_URL}"
            }
         } 
-        //  stage('CodeScan') {
-        //     steps {
-        //         sh "trivy fs --format table -o maven_dependency.html ."       
-        //     }
-        // }
-        // stage('Unit Test'){
-        //     steps{
-        //         sh 'mvn clean package -DskipTests=true'
-        //         sh 'mvn compile -DskipTests=true'
-        //     }
-        // }
-        // stage('SonarQube Scan') {    
-        //         steps {
-        //           withSonarQubeEnv(credentialsId: "${SONAQUBE_CRED}", \
-        //         installationName: "${SONAQUBE_INSTALLATION}" ) {
-        //       sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=${APP_NAME} -Dsonar.projectKey=${APP_NAME} \
-        //            -Dsonar.java.binaries=. '''
-        //         }
-        //     }
-        // }
-        //  stage('Quality Gate Check'){
-        //     steps{
-        //       script{
-        //          waitForQualityGate abortPipeline: false, credentialsId: "${SONAQUBE_CRED}" 
-        //       }
-        //     }
-        // }
+         stage('CodeScan') {
+            steps {
+                sh "trivy fs --format table -o maven_dependency.html ."       
+            }
+        }
+        stage('Unit Test'){
+            steps{
+                sh 'mvn clean package -DskipTests=true'
+                sh 'mvn compile -DskipTests=true'
+            }
+        }
+        stage('SonarQube Scan') {    
+                steps {
+                  withSonarQubeEnv(credentialsId: "${SONAQUBE_CRED}", \
+                installationName: "${SONAQUBE_INSTALLATION}" ) {
+              sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=${APP_NAME} -Dsonar.projectKey=${APP_NAME} \
+                   -Dsonar.java.binaries=. '''
+                }
+            }
+        }
+         stage('Quality Gate Check'){
+            steps{
+              script{
+                 waitForQualityGate abortPipeline: false, credentialsId: "${SONAQUBE_CRED}" 
+              }
+            }
+        }
         //  stage('Code Package'){
         //     steps{
         //         sh 'mvn package -Dcheckstyle.skip=true'
         //     }
         // }
-//         stage('Upload Jar to Jfrog'){
-//             steps{
-//                 withCredentials([usernamePassword(credentialsId: "${JFROG_CRED}", \
-//                  usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
-//                     script {
-//                         // Define the artifact path and target location
-//                         //def artifactPath = 'target/*.jar'
-//                         //def targetPath = "release_${BUILD_ID}.jar"
+        stage('Upload Jar to Jfrog'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: "${JFROG_CRED}", \
+                 usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                    script {
+                        // Define the artifact path and target location
+                        //def artifactPath = 'target/*.jar'
+                        //def targetPath = "release_${BUILD_ID}.jar"
 
-//                         // Upload the artifact using curl
-//                         sh """ curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
-//                                   -T ${ARTIFACTPATH} \
-//                                  ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH} """
-//                         // sh ''' curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD -T target/*.jar http://54.198.102.162:8082/artifactory/devops/release_38.jar
-// // ''' 
-//                    }  
-//                 }
-//             }
-//         }
-//         stage('CodeLogin') {
-//             steps {
-//                 sh " aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_URL"
-//             }
-//         }
-//          stage('DockerImageBuild') {
-//             steps {
-//                 sh ' docker build -t jenkins-ci .'
-//                 sh ' docker build -t imageversion .'
-//             }
-//         }
-//         stage('DockerImageTag') {
-//             steps {
-//                 sh "docker tag jenkins-ci:latest $AWS_REPO:latest"
-//                 sh "docker tag imageversion $AWS_REPO:v1.$BUILD_NUMBER"
-//             }
-//         }
-//          stage('Docker PushImage to ECR') {
-//             steps {
-//                sh "docker push $AWS_REPO:latest"
-//                 sh "docker push $AWS_REPO:v1.$BUILD_NUMBER" 
-//             }
-//         }
+                        // Upload the artifact using curl
+                        sh """ curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
+                                  -T ${ARTIFACTPATH} \
+                                 ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH} """
+                        // sh ''' curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD -T target/*.jar http://54.198.102.162:8082/artifactory/devops/release_38.jar
+// ''' 
+                   }  
+                }
+            }
+        }
+        stage('CodeLogin') {
+            steps {
+                sh " aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_URL"
+            }
+        }
+         stage('DockerImageBuild') {
+            steps {
+                sh ' docker build -t jenkins-ci .'
+                sh ' docker build -t imageversion .'
+            }
+        }
+        stage('DockerImageTag') {
+            steps {
+                sh "docker tag jenkins-ci:latest $AWS_REPO:latest"
+                sh "docker tag imageversion $AWS_REPO:v1.$BUILD_NUMBER"
+            }
+        }
+         stage('Docker PushImage to ECR') {
+            steps {
+               sh "docker push $AWS_REPO:latest"
+                sh "docker push $AWS_REPO:v1.$BUILD_NUMBER" 
+            }
+        }
         stage('Chart Version Update'){
             steps{
                 sh "python3 setup_scripts/chartUpdate.py ${BUILD_ID}" 
@@ -171,19 +171,19 @@ pipeline {
         }
     }
 }
-        stage('Verify the Deployment') {
-            steps {
-                 withCredentials([file(credentialsId: "${KUBERNETES_CRED}", variable: 'KUBECONFIG_CONTENT')]) {
+    //     stage('Verify the Deployment') {
+    //         steps {
+    //              withCredentials([file(credentialsId: "${KUBERNETES_CRED}", variable: 'KUBECONFIG_CONTENT')]) {
             
-                        sh '''
-                         export KUBECONFIG=$KUBECONFIG_FILE 
-                         kubectl get pods  
-                          '''
-                        // sh "kubectl get svc -n webapps"
+    //                     sh '''
+    //                      export KUBECONFIG=$KUBECONFIG_FILE 
+    //                      kubectl get pods  
+    //                       '''
+    //                     // sh "kubectl get svc -n webapps"
                 
-            }
-        }  
+    //         }
+    //     }  
         
-    }
+    // }
     }
  } 
