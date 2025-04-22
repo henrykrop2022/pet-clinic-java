@@ -175,7 +175,7 @@ pipeline {
             steps {
                  withCredentials([string(credentialsId: "${KUBERNETES_CRED}", variable: 'KUBECONFIG_CONTENT')]) {
             
-                        sh "kubectl get nodes"
+                        sh "export KUBECONFIG=$KUBECONFIG_FILE && kubectl get nodes"
                         // sh "kubectl get svc -n webapps"
                 
             }
