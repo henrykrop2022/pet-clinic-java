@@ -177,7 +177,7 @@ pipeline {
             
                         sh '''
                          export KUBECONFIG=$KUBECONFIG_FILE 
-                         kubectl get nodes  
+                         kubectl get pods  
                           '''
                         // sh "kubectl get svc -n webapps"
                 
