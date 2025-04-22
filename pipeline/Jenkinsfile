@@ -165,8 +165,9 @@ pipeline {
                       script {
                         // List files in the workspace to verify that the file is present
                     // sh 'ls -l'
-                    sh 'export KUBECONFIG=$KUBECONFIG_FILE && helm upgrade --install geo geoapp -n dev'
-             }
+                    sh 'export KUBECONFIG=$KUBECONFIG_FILE && helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx'
+
+                      }
         }
     }
 }
