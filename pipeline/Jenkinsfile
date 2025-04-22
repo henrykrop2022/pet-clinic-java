@@ -28,7 +28,7 @@ pipeline {
         DOCKER_REPO_NAME = "${APP_NAME}"
         HELMARTIFACTPATH = "petclinic-${BUILD_ID}.tgz"
         HELMARTIFACTTARGET = "heml/petclinic-${BUILD_ID}.tgz"
-        KUBERNETES_CRED = 'k8-credID'
+        KUBERNETES_CRED = 'k8-creID'
         KUBERNETES_URL = ' https://oidc.eks.us-east-1.amazonaws.com/id/4964B40B1808D40AB69DB546E7E49725'
     }
     stages {
