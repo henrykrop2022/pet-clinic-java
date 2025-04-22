@@ -29,7 +29,7 @@ pipeline {
         HELMARTIFACTPATH = "petclinic-${BUILD_ID}.tgz"
         HELMARTIFACTTARGET = "heml/petclinic-${BUILD_ID}.tgz"
         KUBERNETES_CRED = 'k8-creID'
-        KUBERNETES_URL = ' https://oidc.eks.us-east-1.amazonaws.com/id/A7B4B9D8DA2F3511D5E1376B1442AA62'
+        KUBERNETES_URL =  "https://oidc.eks.us-east-1.amazonaws.com/id/A7B4B9D8DA2F3511D5E1376B1442AA62"
     }
     stages {
         stage('Git Checkout'){ // Cloning the code from the repository
