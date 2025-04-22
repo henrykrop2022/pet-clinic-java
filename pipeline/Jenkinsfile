@@ -160,9 +160,12 @@ pipeline {
         //     }
         // }
         stage('Deploy To Kubernetes') {
-    steps {
-        withCredentials([file(credentialsId: "${KUBERNETES_CRED}", variable: 'KUBECONFIG_FILE')]) {
-            sh 'export KUBECONFIG=$KUBECONFIG_FILE && kubectl apply -f deployment.yaml'
+             steps {
+                    withCredentials([file(credentialsId: "${KUBERNETES_CRED}", variable: 'KUBECONFIG_FILE')]) {
+                      script {
+                        // List files in the workspace to verify that the file is present
+                    sh 'ls -l'
+                    sh 'export KUBECONFIG=$KUBECONFIG_FILE && kubectl apply -f deployment.yaml'
         }
     }
 }
